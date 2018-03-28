@@ -1,0 +1,14 @@
+{
+  "require": {
+    "slim/slim": "^3.9"
+  },
+  "autoload": {
+    "psr-4": {
+      "App\\": "app/"
+    },
+    "files": [
+      "init.php",
+      "app/helpers.php"
+    ]
+  }
+}
