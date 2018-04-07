@@ -35,9 +35,10 @@ class Student
             $existe = $stmt->fetchAll(\PDO::FETCH_ASSOC);
 
             if (empty($existe)) {
-                $sql = sprintf("INSERT INTO alunos_curso (aluMatricula, aluEmail, aluCurso, aluCPF) VALUES (:matricula, :email, :curso, :cpf)");
+                $sql = sprintf("INSERT INTO alunos_curso (aluMatricula, aluNome, aluEmail, aluCurso, aluCPF) VALUES (:matricula, :nome, :email, :curso, :cpf)");
                 $stmt = $DB->prepare($sql);
                 $stmt->bindParam(':matricula', $array['matricula'], \PDO::PARAM_STR);
+                $stmt->bindParam(':nome', $array['nome'], \PDO::PARAM_STR);
                 $stmt->bindParam(':email', $array['email'], \PDO::PARAM_STR);
                 $stmt->bindParam(':curso', $array['curso'], \PDO::PARAM_INT);
                 $stmt->bindParam(':cpf', $array['cpf'], \PDO::PARAM_STR);
@@ -61,10 +62,10 @@ class Student
     {
         $DB = new DB;
 
-        $sql = "SELECT aluId, aluSubmeteu FROM alunos_curso WHERE aluMatricula = :matricula && MD5(REPLACE(REPLACE(aluCPF, '-', ''), '.', '')) = :cpf";
+        $sql = "SELECT aluId, aluSubmeteu FROM alunos_curso WHERE aluMatricula = :matricula && MD5(REPLACE(REPLACE(aluCPF, '-', ''), '.', '')) = MD5(:cpf)";
         $stmt = $DB->prepare($sql);
         $stmt->bindParam(':matricula', $array['matricula'], \PDO::PARAM_INT);
-        $stmt->bindParam(':cpf', md5($array['password']), \PDO::PARAM_INT);
+        $stmt->bindParam(':cpf', $array['password'], \PDO::PARAM_INT);
         $stmt->execute();
 
         if ($stmt->errorCode() === "00000") {
@@ -79,5 +80,73 @@ class Student
             return false;
         }
 
+    }
+
+    public static function fazerLoginAdmin($array)
+    {
+        $DB = new DB;
+
+        $sql = "SELECT admId FROM admin_curso WHERE admUsuario = :usuario && admSenha = MD5(:password)";
+        $stmt = $DB->prepare($sql);
+        $stmt->bindParam(':usuario', $array['usuario'], \PDO::PARAM_STR);
+        $stmt->bindParam(':password', $array['password'], \PDO::PARAM_INT);
+        $stmt->execute();
+
+        if ($stmt->errorCode() === "00000") {
+            $admin = $stmt->fetchAll(\PDO::FETCH_ASSOC);
+            return $admin[0];
+        } else {
+            return false;
+        }
+
+    }
+
+    public static function upImg($array)
+    {
+        if (isset($array['file']['name']) && $array['file']['error'] == 0) {
+            $file_tmp = $array['file']['tmp_name'];
+            $nome = $array['file']['name'];
+            $extensao = pathinfo($nome, PATHINFO_EXTENSION);
+            $extensao = strtolower($extensao);
+
+            // Somente imagens, .jpg;.jpeg;.gif;.png
+            if (strstr('.jpg;.jpeg;.gif;.png', $extensao)) {
+                $novoNome = $_SESSION['aluno'] . '.' . $extensao;
+                $destino = viewsPath() . 'Frontend/images/alunos/' . $novoNome;
+
+                if (move_uploaded_file($file_tmp, $destino)) {
+                    $DB = new DB;
+
+                    $sql = "INSERT INTO files (aluId, filTipo, filTamanho, filCaminho, filCriadoEm) VALUES (:aluno, :tipo, :tamanho, :caminho, NOW())";
+                    $stmt = $DB->prepare($sql);
+                    $stmt->bindParam(':aluno', $_SESSION['aluno'], \PDO::PARAM_INT);
+                    $stmt->bindParam(':tipo', $array['file']['type'], \PDO::PARAM_STR);
+                    $stmt->bindParam(':tamanho', $array['file']['size'], \PDO::PARAM_INT);
+                    $stmt->bindParam(':caminho', $destino, \PDO::PARAM_STR);
+                    $stmt->execute();
+
+                    if ($stmt->errorCode() === "00000") {
+                        $sql = "UPDATE alunos_curso SET aluSubmeteu = 1 WHERE aluId = :aluno";
+                        $stmt = $DB->prepare($sql);
+                        $stmt->bindParam(':aluno', $_SESSION['aluno'], \PDO::PARAM_INT);
+                        $stmt->execute();
+
+                        if ($stmt->errorCode() === "00000") {
+                            return true;
+                        } else {
+                            unlink($destino);
+                            return false;
+                        }
+                    } else {
+                        unlink($destino);
+                        return false;
+                    }
+
+                } else
+                    return false;
+            } else
+                return false;
+        } else
+            return false;
     }
 }

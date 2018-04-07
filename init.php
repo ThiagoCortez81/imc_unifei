@@ -1,4 +1,5 @@
 <?php
+session_start();
 //BASE DIR
 define('BASE_PATH', dirname(__FILE__));
 
@@ -11,4 +12,5 @@ define('MYSQL_DBNAME', 'thiagoco_imc');
 //PHP config
 ini_set('display_errors', true);
 error_reporting(E_ERROR);
+
 date_default_timezone_set('America/Sao_Paulo');

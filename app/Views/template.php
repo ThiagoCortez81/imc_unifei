@@ -23,6 +23,8 @@
     <link rel="stylesheet" type="text/css" href="<?php echo frontendPath(); ?>css/bootstrap.min.css">
     <link rel="stylesheet" type="text/css" href="<?php echo frontendPath(); ?>css/bootstrap-grid.min.css">
     <link rel="stylesheet" type="text/css" href="<?php echo frontendPath(); ?>css/bootstrap-reboot.min.css">
+    <link rel="stylesheet" type="text/css" href="<?php echo frontendPath(); ?>css/dropzone.min.css">
+    <link rel="stylesheet" type="text/css" href="<?php echo frontendPath(); ?>css/dropzone-basic.min.css">
     <!--===============================================================================================-->
 </head>
 
@@ -46,5 +48,41 @@ if (isset($viewName)) {
 <script src="<?php echo frontendPath(); ?>vendor/select2/select2.min.js"></script>
 <!--===============================================================================================-->
 <script src="<?php echo frontendPath(); ?>js/jquery.mask.js"></script>
+<script src="<?php echo frontendPath(); ?>js/dropzone.js"></script>
 <script src="<?php echo frontendPath(); ?>js/main.js"></script>
+<script>
+    Dropzone.autoDiscover = false;
+    $(document).ready(function () {
+        uploadLogo = new Dropzone("#uploadLogo", {
+            url: '/unifei/index.php/sendImage',
+            method: 'post',
+            paramName: "file",
+            thumbnailHeight: 350,
+            thumbnailWidth: 350,
+            uploadMultiple: false,
+            maxFiles: 1,
+            acceptedFiles: 'image/*',
+            maxFilesize: 2,
+            addRemoveLinks: false,
+            autoProcessQueue: false
+        });
+
+        uploadLogo.on('error', function (file, message) {
+            alert(message);
+            uploadLogo.removeAllFiles();
+        });
+
+        uploadLogo.on("success", function (file, message) {
+            var res = JSON.parse(message);
+            if (res.success) {
+                console.log("aqui");
+                window.location.replace("/unifei/index.php/send");
+            }
+        });
+
+        $('#sendImg').on('click', function (e) {
+            uploadLogo.processQueue();
+        });
+    });
+</script>
 </html>

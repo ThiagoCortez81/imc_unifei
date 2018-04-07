@@ -11,7 +11,7 @@ class StudentController
         $StudentModel = new \App\Models\Student();
         $courses = $StudentModel::selectCourses();
         if (!$courses['error'])
-            \App\View::make('students.subscription', ['registro' => false, 'courses' => arrayToUtf8($courses)]);
+            \App\View::make('students.subscription', array('registro' => false, 'courses' => arrayToUtf8($courses)));
         else
             echo '<h1><b>DB ERROR!</b></h1>';
     }
@@ -24,12 +24,12 @@ class StudentController
         $res = $StudentModel::cadastrarCurso($campos);
 
         if (!empty($res['matricula'])) {
-            \App\View::make('students.subscription', ['cpfExistente' => $res, 'registro' => true, 'courses' => arrayToUtf8($courses)]);
+            \App\View::make('students.subscription', array('cpfExistente' => $res, 'registro' => true, 'courses' => arrayToUtf8($courses)));
         } else {
             if (!$res) {
-                \App\View::make('students.subscription', ['cadastroSucesso' => true, 'registro' => true, 'courses' => arrayToUtf8($courses)]);
+                \App\View::make('students.subscription', array('cadastroSucesso' => true, 'registro' => true, 'courses' => arrayToUtf8($courses)));
             } else {
-                \App\View::make('students.subscription', ['cadastroSucesso' => false, 'registro' => true, 'courses' => arrayToUtf8($courses)]);
+                \App\View::make('students.subscription', array('cadastroSucesso' => false, 'registro' => true, 'courses' => arrayToUtf8($courses)));
             }
         }
     }
@@ -43,20 +43,73 @@ class StudentController
 
         if (is_array($login)) {
             if ($login['aluId'] && $login['aluSubmeteu'] == 0) {
-                \App\View::make('students.gallery', ['id' => $login['aluId']]);
+                $_SESSION['aluno'] = $login['aluId'];
+                \App\View::make('students.upload', array());
 
             } else {
                 $this->auth('Ops, parece que você já enviou um logo!');
             }
         } else if ($login == NULL) {
-            $this->auth('Matricula e/ou senha errada!');
+            $this->auth('Matricula e/ou senha não conferem!');
         } else {
             $this->auth('Erro no servidor!');
         }
     }
 
-    public function auth($error = null)
+    public function auth($error = null, $success = null)
     {
-        \App\View::make('students.auth', ['error', $error]);
+        if ($_SESSION['success']) {
+            $success = $_SESSION['success'];
+            $_SESSION['success'] = '';
+            unset($_SESSION['success']);
+        }
+
+        \App\View::make('students.auth', array('error' => $error, 'success' => $success));
+    }
+
+    //Receber imagem e salvar
+    public function saveFile($file)
+    {
+        $StudentModel = new \App\Models\Student();
+        $upload = $StudentModel::upImg($file);
+
+        if ($upload) {
+            $_SESSION['success'] = "Obrigado, seu logo foi enviado com sucesso!";
+            $res['success'] = true;
+            echo json_encode($res);
+        }
+    }
+
+    //Login admin
+
+    public function doAuthAdmin($campos)
+    {
+        $StudentModel = new \App\Models\Student();
+        $login = $StudentModel::fazerLoginAdmin($campos);
+
+        if (is_array($login)) {
+            if (!empty($login['admId'])) {
+                $_SESSION['admin'] = $login['admin'];
+                \App\View::make('admin.viewAll', array());
+
+            } else {
+                $this->authAdmin('Ops, parece que você já enviou um logo!');
+            }
+        } else if ($login == NULL) {
+            $this->authAdmin('Login e/ou senha não conferem!');
+        } else {
+            $this->authAdmin('Erro no servidor!');
+        }
+    }
+
+    public function authAdmin($error = null, $success = null)
+    {
+        if ($_SESSION['success']) {
+            $success = $_SESSION['success'];
+            $_SESSION['success'] = '';
+            unset($_SESSION['success']);
+        }
+
+        \App\View::make('admin.auth', array('error' => $error, 'success' => $success));
     }
 }

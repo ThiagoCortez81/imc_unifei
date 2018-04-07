@@ -1,4 +1,4 @@
-<div class="bg-contact2" style="background-image: url('images/bg-01.jpg');">
+<div class="bg-contact2" style="background-image: url('<?php echo frontendPath(); ?>images/bg-01.jpg');">
     <div class="container-contact2">
         <div class="wrap-contact2">
             <form class="contact2-form validate-form" method="POST">
@@ -6,8 +6,10 @@
                     <img src="<?php echo frontendPath(); ?>images/efei.gif" alt="UNIFEI"
                          style="max-width: 10%; border-right: 1px solid #000; padding-right: 5px;">
                     Inscrições
-                    <h6>Logo IMC</h6>
+                    <h6>Curso de design de logotipos</h6>
                 </span>
+
+                Inscrições até 2 maio
 
                 <?php
                 if ($registro) {
@@ -71,6 +73,9 @@
                     <input class="input2" type="text" value="<?php echo $cpfExistente['cpf'] ?>" name="cpf">
                     <span class="focus-input2" data-placeholder="CPF"></span>
                 </div>
+
+                <input type="checkbox">
+                Concordo em ceder os direitos autorais do logotipo ao Instituto de Matemática e Computação
 
                 <div class="container-contact2-form-btn">
                     <div class="wrap-contact2-form-btn">

@@ -29,7 +29,12 @@
     var email = $('.validate-input input[name="email"]');
     var password = $('input[name="password"]');
 
-
+    matricula.keypress(function () {
+        $(this).val(this.value.substring(0, 11));
+    });
+    matricula.change(function () {
+        $(this).val(this.value.substring(0, 11));
+    });
     /** LOGIN SECTION **/
 
     $('.login-form').on('submit', function (event) {

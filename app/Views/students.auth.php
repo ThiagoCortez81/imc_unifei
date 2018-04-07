@@ -1,4 +1,4 @@
-<div class="bg-contact2" style="background-image: url('images/bg-01.jpg');">
+<div class="bg-contact2" style="background-image: url('<?php echo frontendPath(); ?>images/bg-01.jpg');">
     <div class="container-contact2">
         <div class="wrap-contact2">
             <form class="contact2-form login-form" method="POST">
@@ -10,28 +10,17 @@
                 </span>
 
                 <?php
-                if ($registro) {
-                    if ($cpfExistente) {
-                        ?>
-                        <div class="alert alert-danger" role="alert">
-                            Um aluno com esse CPF ou matrícula já foi cadastrado!
-                        </div>
-                        <?php
-                    } else {
-                        if ($cadastroSucesso) {
-                            ?>
-                            <div class="alert alert-success" role="alert">
-                                Cadastro realizado com sucesso!
-                            </div>
-                            <?php
-                        } else {
-                            ?>
-                            <div class="alert alert-danger" role="alert">
-                                Houve um erro ao cadastrar!
-                            </div>
-                            <?php
-                        }
-                    }
+                if ($error) {
+                    echo "
+                    <div class='alert alert-danger' role='alert'>
+                        " . $error . "
+                    </div>";
+                }
+                if ($success) {
+                    echo "
+                    <div class='alert alert-success' role='alert'>
+                        " . $success . "
+                    </div>";
                 }
                 ?>
 

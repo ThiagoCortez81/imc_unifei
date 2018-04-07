@@ -1,5 +1,6 @@
 <?php
-require_once 'vendor/autoload.php';
+
+require_once __DIR__ . '/vendor/autoload.php';
 
 $app = new \Slim\App(['settings' => ['displayErrorDetails' => true]]);
 
@@ -13,14 +14,29 @@ $app->post('/subscribe', function () {
     $StudentsController->cadastrarCurso($_POST);
 });
 
-$app->get('/auth', function () {
+$app->get('/send', function () {
     $StudentsController = new \App\Controllers\StudentController();
     $StudentsController->auth();
 });
 
-$app->post('/auth', function () {
+$app->post('/send', function () {
     $StudentsController = new \App\Controllers\StudentController();
     $StudentsController->doAuth($_POST);
+});
+
+$app->post('/sendImage', function () {
+    $StudentsController = new \App\Controllers\StudentController();
+    $StudentsController->saveFile($_FILES);
+});
+
+$app->get('/restrito', function () {
+    $AdminController = new \App\Controllers\StudentController();
+    $AdminController->authAdmin();
+});
+
+$app->post('/restrito', function () {
+    $AdminController = new \App\Controllers\StudentController();
+    $AdminController->doAuthAdmin($_POST);
 });
 
 $app->run();
