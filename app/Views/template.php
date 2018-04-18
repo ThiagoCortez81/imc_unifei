@@ -27,6 +27,8 @@
     <link rel="stylesheet" type="text/css" href="<?php echo frontendPath(); ?>css/dropzone.min.css">
     <link rel="stylesheet" type="text/css" href="<?php echo frontendPath(); ?>css/dropzone-basic.min.css">
     <!--===============================================================================================-->
+    <script src="<?php echo frontendPath(); ?>vendor/jquery/jquery-3.2.1.min.js"></script>
+    <!--===============================================================================================-->
 </head>
 
 <body>
@@ -40,8 +42,6 @@ if (isset($viewName)) {
 ?>
 </body>
 
-<!--===============================================================================================-->
-<script src="<?php echo frontendPath(); ?>vendor/jquery/jquery-3.2.1.min.js"></script>
 <!--===============================================================================================-->
 <script src="<?php echo frontendPath(); ?>vendor/bootstrap/js/popper.js"></script>
 <script src="<?php echo frontendPath(); ?>vendor/bootstrap/js/bootstrap.min.js"></script>

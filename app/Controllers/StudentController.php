@@ -89,7 +89,7 @@ class StudentController
 
         if (is_array($login)) {
             if (!empty($login['admId'])) {
-                $_SESSION['admin'] = $login['admin'];
+                $_SESSION['admin'] = $login['admId'];
                 \App\View::make('admin.viewAll', array());
 
             } else {

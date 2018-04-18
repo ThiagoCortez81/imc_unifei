@@ -1,6 +1,8 @@
 <?php
 
-require_once __DIR__ . '/vendor/autoload.php';
+
+header("Location: subscribe");
+/*require_once __DIR__ . '/vendor/autoload.php';
 
 $app = new \Slim\App(['settings' => ['displayErrorDetails' => true]]);
 
@@ -37,5 +39,5 @@ $app->post('/restrito', function () {
     $AdminController->doAuthAdmin($_POST);
 });
 
-$app->run();
+$app->run();*/
 ?>

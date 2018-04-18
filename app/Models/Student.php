@@ -149,4 +149,21 @@ class Student
         } else
             return false;
     }
+
+    public static function selectAll()
+    {
+        $DB = new DB;
+
+        $sql = "SELECT aluMatricula, aluNome, aluEmail, csDescricao, IF(aluSubmeteu, 'Logotipo enviado!', 'Matriculado') AS aluSubmeteu FROM alunos_curso ac JOIN cursos c ON ac.aluCurso = csId";
+        $stmt = $DB->prepare($sql);
+        $stmt->execute();
+
+//        var_dump($stmt->errorCode());
+        if ($stmt->errorCode() === "00000") {
+            $alunos = $stmt->fetchAll(\PDO::FETCH_ASSOC);
+            return $alunos;
+        } else {
+            return false;
+        }
+    }
 }

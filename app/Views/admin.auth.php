@@ -27,7 +27,7 @@
                 <div class="wrap-input2 validate-input" data-validate="A matrícula é necessária">
                     <input class="input2" type="text" value="<?php echo $cpfExistente['matricula'] ?>"
                            name="usuario">
-                    <span class="focus-input2" data-placeholder="MATRICULA"></span>
+                    <span class="focus-input2" data-placeholder="LOGIN"></span>
                 </div>
 
                 <div class="wrap-input2 validate-input" data-validate="A senha é necessária">
