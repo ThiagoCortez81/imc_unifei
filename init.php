@@ -5,9 +5,9 @@ define('BASE_PATH', dirname(__FILE__));
 
 //ACESSO AO BD
 define('MYSQL_HOST', 'localhost');
-define('MYSQL_USER', 'root');
-define('MYSQL_PASSWORD', 'root');
-define('MYSQL_DBNAME', 'thiagoco_imc');
+define('MYSQL_USER', 'unifeiadmin');
+define('MYSQL_PASSWORD', 'nejere4at');
+define('MYSQL_DBNAME', 'logotipoimc_data');
 
 //PHP config
 ini_set('display_errors', true);

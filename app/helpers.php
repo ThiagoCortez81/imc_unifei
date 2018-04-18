@@ -6,7 +6,7 @@ function viewsPath()
 
 function frontendPath()
 {
-    return DIRECTORY_SEPARATOR . 'unifei' . DIRECTORY_SEPARATOR . 'app' . DIRECTORY_SEPARATOR . 'Views' . DIRECTORY_SEPARATOR . 'Frontend' . DIRECTORY_SEPARATOR;
+    return DIRECTORY_SEPARATOR . 'app' . DIRECTORY_SEPARATOR . 'Views' . DIRECTORY_SEPARATOR . 'Frontend' . DIRECTORY_SEPARATOR;
 }
 
 /** Converte datas entre os padrões ISO e brasileiro **/

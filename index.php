@@ -5,13 +5,11 @@ require_once __DIR__ . '/vendor/autoload.php';
 $app = new \Slim\App(['settings' => ['displayErrorDetails' => true]]);
 
 $app->get('/subscribe', function () {
-    $StudentsController = new \App\Controllers\StudentController();
-    $StudentsController->subscribe();
+
 });
 
 $app->post('/subscribe', function () {
-    $StudentsController = new \App\Controllers\StudentController();
-    $StudentsController->cadastrarCurso($_POST);
+
 });
 
 $app->get('/send', function () {

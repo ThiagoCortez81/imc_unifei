@@ -1,11 +1,12 @@
 <!doctype html>
 <html>
 <head>
-    <title>Contact V2</title>
+    <title>UNIFEI - Logotipo IMC</title>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <!--===============================================================================================-->
-    <link rel="icon" type="image/png" href="<?php echo frontendPath(); ?>images/icons/favicon.ico"/>
+    <link rel="icon" type="image/png"
+          href="https://unifei.edu.br/wp-content/themes/twentytwelve-child/img/cabecalho/logo-unifei-oficial.png"/>
     <!--===============================================================================================-->
     <link rel="stylesheet" type="text/css" href="<?php echo frontendPath(); ?>vendor/bootstrap/css/bootstrap.min.css">
     <!--===============================================================================================-->
