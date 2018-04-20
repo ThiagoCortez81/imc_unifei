@@ -28,6 +28,7 @@
     var cpf = $('.validate-input input[name="cpf"]');
     var email = $('.validate-input input[name="email"]');
     var password = $('input[name="password"]');
+    var termos = $('input[type="checkbox"]');
 
     matricula.keypress(function () {
         $(this).val(this.value.substring(0, 11));
@@ -63,7 +64,7 @@
     });
 
 
-    $('.validate-form').on('submit', function () {
+    $('.validate-form').on('submit', function (event) {
         var check = true;
 
         if (matricula.val().trim() == '') {
@@ -88,6 +89,11 @@
 
         if (email.val().trim() == '' || email.val().trim().match(/^([a-zA-Z0-9_\-\.]+)@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.)|(([a-zA-Z0-9\-]+\.)+))([a-zA-Z]{1,5}|[0-9]{1,3})(\]?)$/) == null) {
             showValidate(email);
+            check = false;
+        }
+
+        if (!termos.is(":checked")) {
+            showValidate(termos);
             check = false;
         }
 

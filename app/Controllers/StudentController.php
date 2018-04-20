@@ -9,10 +9,17 @@ class StudentController
     public function subscribe()
     {
         $StudentModel = new \App\Models\Student();
+        $quantidade = $StudentModel::numInsc();
         $courses = $StudentModel::selectCourses();
-        if (!$courses['error'])
-            \App\View::make('students.subscription', array('registro' => false, 'courses' => arrayToUtf8($courses)));
-        else
+        if (!$courses['error'] && !$quantidade['error']) {
+            if ($quantidade['num'] <= 50)
+                \App\View::make('students.subscription', array('registro' => false, 'courses' => arrayToUtf8($courses), 'finalizado' => false));
+            else if ($quantidade['num'] <= 60)
+                \App\View::make('students.subscription', array('registro' => false, 'courses' => arrayToUtf8($courses), 'retaFinal' => true, 'finalizado' => false));
+            else
+                \App\View::make('students.subscription', array('registro' => false, 'courses' => arrayToUtf8($courses), 'finalizado' => true));
+
+        } else
             echo '<h1><b>DB ERROR!</b></h1>';
     }
 
@@ -20,18 +27,27 @@ class StudentController
     public function cadastrarCurso($campos)
     {
         $StudentModel = new \App\Models\Student();
+        $quantidade = $StudentModel::numInsc();
         $courses = $StudentModel::selectCourses();
         $res = $StudentModel::cadastrarCurso($campos);
 
-        if (!empty($res['matricula'])) {
-            \App\View::make('students.subscription', array('cpfExistente' => $res, 'registro' => true, 'courses' => arrayToUtf8($courses)));
-        } else {
-            if (!$res) {
-                \App\View::make('students.subscription', array('cadastroSucesso' => true, 'registro' => true, 'courses' => arrayToUtf8($courses)));
+        if ($quantidade['num'] < 60) {
+            if (!empty($res['matricula'])) {
+                \App\View::make('students.subscription', array('cpfExistente' => $res, 'registro' => true, 'courses' => arrayToUtf8($courses)));
             } else {
-                \App\View::make('students.subscription', array('cadastroSucesso' => false, 'registro' => true, 'courses' => arrayToUtf8($courses)));
+                if (!$res) {
+                    if ($quantidade['num'] <= 50)
+                        \App\View::make('students.subscription', array('cadastroSucesso' => true, 'registro' => true, 'courses' => arrayToUtf8($courses), 'finalizado' => false));
+                    else if ($quantidade['num'] <= 60)
+                        \App\View::make('students.subscription', array('cadastroSucesso' => true, 'registro' => true, 'courses' => arrayToUtf8($courses), 'retaFinal' => true, 'finalizado' => false));
+                    else
+                        \App\View::make('students.subscription', array('cadastroSucesso' => true, 'registro' => true, 'courses' => arrayToUtf8($courses), 'finalizado' => true));
+                } else {
+                    \App\View::make('students.subscription', array('cadastroSucesso' => false, 'registro' => true, 'courses' => arrayToUtf8($courses)));
+                }
             }
-        }
+        } else
+            \App\View::make('students.subscription', array('registro' => false, 'courses' => arrayToUtf8($courses), 'finalizado' => true));
     }
 
     //Login

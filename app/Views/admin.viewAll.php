@@ -6,7 +6,11 @@ if (!empty($_SESSION['admin'])) {
     <div class="bg-contact2" style="background-image: url('<?php echo frontendPath(); ?>images/bg-01.jpg');">
         <div class="container-contact2">
             <div class="wrap-contact2" style="width: 90%!important;">
-                <h3 style="text-align: center">Alunos inscritos</h3>
+                <span class="contact2-form-title" style="padding-bottom: 5px;">
+                    <img src="<?php echo frontendPath(); ?>images/efei.gif" alt="UNIFEI"
+                         style="max-width: 5%; padding-right: 5px;">
+                    <h3 style="text-align: center">Alunos inscritos</h3>
+                </span>
                 <table class="table table-hover" id="tabela">
                     <thead>
                     <tr>

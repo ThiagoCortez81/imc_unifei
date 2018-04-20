@@ -6,6 +6,21 @@ use App\DB;
 
 class Student
 {
+    public static function numInsc()
+    {
+        $sql = sprintf("SELECT COUNT(*) AS num FROM alunos_curso");
+        $DB = new DB;
+
+        $stmt = $DB->prepare($sql);
+        if ($stmt->execute()) {
+            $quantidade = $stmt->fetchAll(\PDO::FETCH_ASSOC);
+        } else {
+            $quantidade['error'] = true;
+        }
+
+        return $quantidade;
+    }
+
     public static function selectCourses()
     {
         $sql = sprintf("SELECT * FROM cursos ORDER BY csDescricao");
