@@ -99,6 +99,10 @@
                         </div>
                     </div>
                     <?php
+                } else {
+                    ?>
+                    <h3 style="text-align: center;">Obrigado, inscrições finalizadas!</h3>
+                    <?php
                 }
                 ?>
             </form>

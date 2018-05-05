@@ -7,5 +7,5 @@ RewriteRule ^(.*)$ $1.php
 
 # Redirecionar para HTTPS
 RewriteCond %{HTTPS} !=on
-RewriteCond %{HTTP_HOST} ^(www\.)?domain\.com$ [NC]
-RewriteRule ^.*$ https://www.domain.com%{REQUEST_URI} [R,L]
+RewriteCond %{HTTP_HOST} ^(www\.)?logotipoimc.unifei\.edu.br$ [NC]
+RewriteRule ^.*$ https://logotipoimc.unifei.edu.br%{REQUEST_URI} [R,L]

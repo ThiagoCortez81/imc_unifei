@@ -11,10 +11,11 @@ class StudentController
         $StudentModel = new \App\Models\Student();
         $quantidade = $StudentModel::numInsc();
         $courses = $StudentModel::selectCourses();
+
         if (!$courses['error'] && !$quantidade['error']) {
-            if ($quantidade['num'] <= 50)
+            if ($quantidade[0]['num'] <= 50)
                 \App\View::make('students.subscription', array('registro' => false, 'courses' => arrayToUtf8($courses), 'finalizado' => false));
-            else if ($quantidade['num'] <= 60)
+            else if ($quantidade[0]['num'] < 60)
                 \App\View::make('students.subscription', array('registro' => false, 'courses' => arrayToUtf8($courses), 'retaFinal' => true, 'finalizado' => false));
             else
                 \App\View::make('students.subscription', array('registro' => false, 'courses' => arrayToUtf8($courses), 'finalizado' => true));
@@ -31,14 +32,14 @@ class StudentController
         $courses = $StudentModel::selectCourses();
         $res = $StudentModel::cadastrarCurso($campos);
 
-        if ($quantidade['num'] < 60) {
+        if ($quantidade[0]['num'] < 60) {
             if (!empty($res['matricula'])) {
                 \App\View::make('students.subscription', array('cpfExistente' => $res, 'registro' => true, 'courses' => arrayToUtf8($courses)));
             } else {
                 if (!$res) {
-                    if ($quantidade['num'] <= 50)
+                    if ($quantidade[0]['num'] <= 50)
                         \App\View::make('students.subscription', array('cadastroSucesso' => true, 'registro' => true, 'courses' => arrayToUtf8($courses), 'finalizado' => false));
-                    else if ($quantidade['num'] <= 60)
+                    else if ($quantidade[0]['num'] <= 60)
                         \App\View::make('students.subscription', array('cadastroSucesso' => true, 'registro' => true, 'courses' => arrayToUtf8($courses), 'retaFinal' => true, 'finalizado' => false));
                     else
                         \App\View::make('students.subscription', array('cadastroSucesso' => true, 'registro' => true, 'courses' => arrayToUtf8($courses), 'finalizado' => true));
@@ -84,10 +85,10 @@ class StudentController
     }
 
     //Receber imagem e salvar
-    public function saveFile($file)
+    public function saveFile($file, $descricao)
     {
         $StudentModel = new \App\Models\Student();
-        $upload = $StudentModel::upImg($file);
+        $upload = $StudentModel::upImg($file, $descricao);
 
         if ($upload) {
             $_SESSION['success'] = "Obrigado, seu logo foi enviado com sucesso!";
@@ -127,5 +128,11 @@ class StudentController
         }
 
         \App\View::make('admin.auth', array('error' => $error, 'success' => $success));
+    }
+
+    public function vote($campos)
+    {
+        $_SESSION['servidor'] = true;
+        \App\View::make('galeria.viewAll', array('visualizar' => true, 'votou' => true));
     }
 }

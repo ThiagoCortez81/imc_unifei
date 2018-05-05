@@ -40,6 +40,16 @@ if (isset($viewName)) {
     }
 }
 ?>
+
+<!--enviando-->
+<div class="modal fade in" id="ajax" role="basic" aria-hidden="false" style="padding-right: 12px;">
+    <div class="modal-backdrop fade in" style="height: 100%;"></div>
+    <div class="modal-dialog">
+        <div class="modal-content">
+            &nbsp;&nbsp;Enviando logo, aguarde... </span>
+        </div>
+    </div>
+</div>
 </body>
 
 <!--===============================================================================================-->
@@ -55,7 +65,7 @@ if (isset($viewName)) {
     Dropzone.autoDiscover = false;
     $(document).ready(function () {
         uploadLogo = new Dropzone("#uploadLogo", {
-            url: '/unifei/index.php/sendImage',
+            url: '/sendImage',
             method: 'post',
             paramName: "file",
             thumbnailHeight: 350,
@@ -71,17 +81,19 @@ if (isset($viewName)) {
         uploadLogo.on('error', function (file, message) {
             alert(message);
             uploadLogo.removeAllFiles();
+            $("#ajax").modal('hide');
         });
 
         uploadLogo.on("success", function (file, message) {
             var res = JSON.parse(message);
             if (res.success) {
-                console.log("aqui");
-                window.location.replace("/unifei/index.php/send");
+                window.location.replace("/send");
             }
         });
 
         $('#sendImg').on('click', function (e) {
+            $("#ajax").modal(true);
+            $("input[name='descricao']").val($("#descricao").val());
             uploadLogo.processQueue();
         });
     });

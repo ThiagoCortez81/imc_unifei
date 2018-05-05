@@ -17,6 +17,7 @@ class Student
         } else {
             $quantidade['error'] = true;
         }
+        $quantidade[0]['num'] = 60;
 
         return $quantidade;
     }
@@ -116,7 +117,7 @@ class Student
 
     }
 
-    public static function upImg($array)
+    public static function upImg($array, $descricao)
     {
         if (isset($array['file']['name']) && $array['file']['error'] == 0) {
             $file_tmp = $array['file']['tmp_name'];
@@ -132,9 +133,10 @@ class Student
                 if (move_uploaded_file($file_tmp, $destino)) {
                     $DB = new DB;
 
-                    $sql = "INSERT INTO files (aluId, filTipo, filTamanho, filCaminho, filCriadoEm) VALUES (:aluno, :tipo, :tamanho, :caminho, NOW())";
+                    $sql = "INSERT INTO files (aluId, filDescricao, filTipo, filTamanho, filCaminho, filCriadoEm) VALUES (:aluno, :descricao, :tipo, :tamanho, :caminho, NOW())";
                     $stmt = $DB->prepare($sql);
                     $stmt->bindParam(':aluno', $_SESSION['aluno'], \PDO::PARAM_INT);
+                    $stmt->bindParam(':descricao', $descricao, \PDO::PARAM_STR);
                     $stmt->bindParam(':tipo', $array['file']['type'], \PDO::PARAM_STR);
                     $stmt->bindParam(':tamanho', $array['file']['size'], \PDO::PARAM_INT);
                     $stmt->bindParam(':caminho', $destino, \PDO::PARAM_STR);
