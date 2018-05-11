@@ -42,7 +42,7 @@ if (isset($viewName)) {
 ?>
 
 <!--enviando-->
-<div class="modal fade in" id="ajax" role="basic" aria-hidden="false" style="padding-right: 12px;">
+<div class="modal fade in" id="ajax" role="basic" aria-hidden="false" style="padding-right: 12px;99891450   ">
     <div class="modal-backdrop fade in" style="height: 100%;"></div>
     <div class="modal-dialog">
         <div class="modal-content">

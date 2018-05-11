@@ -10,17 +10,27 @@
                 </span>
 
                 <?php
+                $flag = true;
+
                 if ($error) {
+                    $flag = false;
                     echo "
                     <div class='alert alert-danger' role='alert'>
                         " . $error . "
                     </div>";
                 }
                 if ($success) {
+                    $flag = false;
                     echo "
                     <div class='alert alert-success' role='alert'>
                         " . $success . "
                     </div>";
+                }
+
+                if ($flag) {
+                    echo '<div class=\'alert alert-warning\' role=\'alert\'>
+                              Sua <b>senha</b> de acesso é seu numero de <b>CPF</b>, sem pontuações.
+                          </div>';
                 }
                 ?>
 
