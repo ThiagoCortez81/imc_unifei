@@ -1,50 +1,49 @@
-<!doctype html>
+<!DOCTYPE html>
 <html>
 <head>
-    <title>Contact 2</title>
-    <meta charset="UTF-8">
+
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <!--===============================================================================================-->
-    <link rel="icon" type="image/png" href="<?php echo frontendPath(); ?>images/icons/favicon.ico"/>
-    <!--===============================================================================================-->
-    <link rel="stylesheet" type="text/css" href="<?php echo frontendPath(); ?>vendor/bootstrap/css/bootstrap.min.css">
-    <!--===============================================================================================-->
-    <link rel="stylesheet" type="text/css"
-          href="<?php echo frontendPath(); ?>fonts/font-awesome-4.7.0/css/font-awesome.min.css">
-    <!--===============================================================================================-->
-    <link rel="stylesheet" type="text/css" href="<?php echo frontendPath(); ?>vendor/animate/animate.css">
-    <!--===============================================================================================-->
-    <link rel="stylesheet" type="text/css" href="<?php echo frontendPath(); ?>vendor/css-hamburgers/hamburgers.min.css">
-    <!--===============================================================================================-->
-    <link rel="stylesheet" type="text/css" href="<?php echo frontendPath(); ?>vendor/select2/select2.min.css">
-    <!--===============================================================================================-->
-    <link rel="stylesheet" type="text/css" href="<?php echo frontendPath(); ?>css/util.css">
-    <link rel="stylesheet" type="text/css" href="<?php echo frontendPath(); ?>css/main.css">
-    <link rel="stylesheet" type="text/css" href="<?php echo frontendPath(); ?>css/bootstrap.min.css">
-    <link rel="stylesheet" type="text/css" href="<?php echo frontendPath(); ?>css/bootstrap-grid.min.css">
-    <link rel="stylesheet" type="text/css" href="<?php echo frontendPath(); ?>css/bootstrap-reboot.min.css">
-    <!--===============================================================================================-->
+
+    <title>UNIFEI - Logotipo IMC</title>
+    <link rel="icon" type="image/png"
+          href="https://unifei.edu.br/wp-content/themes/twentytwelve-child/img/cabecalho/logo-unifei-oficial.png"/>
+
+    <link rel="stylesheet" type="text/css" href="<?php echo frontendPath(); ?>css/main.css?v=1.1">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <link href="https://fonts.googleapis.com/css?family=Droid+Sans:400,700" rel="stylesheet">
+    <link href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet"
+          integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/baguettebox.js/1.8.1/baguetteBox.min.css">
+    <link rel="stylesheet" href="<?php echo frontendPath(); ?>css/thumbnail-gallery.css">
+    <style>
+        #baguetteBox-overlay .full-image img {
+            -webkit-box-shadow: none;
+            -moz-box-shadow: none;
+            box-shadow: none;
+        }
+    </style>
 </head>
-
-<body>
-<?php
-if (isset($viewName)) {
-    $path = viewsPath() . $viewName . '.php';
-    if (file_exists($path)) {
-        require_once $path;
-    }
-}
-?>
-</body>
-
-<!--===============================================================================================-->
+<body style="background-image: url('<?php echo frontendPath(); ?>images/bg-01.jpg');">
+<div style="background: rgba(16, 58, 132, 0.8);  <?php if (empty($_SESSION['servidor'])) {
+    echo "height: 100%;";
+} ?>">
+    <div class="container gallery-container wrap-contact2">
+        <?php
+        if (isset($viewName)) {
+            $path = viewsPath() . $viewName . '.php';
+            if (file_exists($path)) {
+                require_once $path;
+            }
+        }
+        ?>
+    </div>
+</div>
 <script src="<?php echo frontendPath(); ?>vendor/jquery/jquery-3.2.1.min.js"></script>
-<!--===============================================================================================-->
-<script src="<?php echo frontendPath(); ?>vendor/bootstrap/js/popper.js"></script>
-<script src="<?php echo frontendPath(); ?>vendor/bootstrap/js/bootstrap.min.js"></script>
-<!--===============================================================================================-->
-<script src="<?php echo frontendPath(); ?>vendor/select2/select2.min.js"></script>
-<!--===============================================================================================-->
-<script src="<?php echo frontendPath(); ?>js/jquery.mask.js"></script>
-<script src="<?php echo frontendPath(); ?>js/main.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/baguettebox.js/1.8.1/baguetteBox.min.js"></script>
+<script>
+    baguetteBox.run('.tz-gallery');
+</script>
+</body>
 </html>

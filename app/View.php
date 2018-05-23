@@ -10,7 +10,7 @@ class View
         extract($customVars);
 
         if ($customVars['visualizar']) {
-            require_once viewsPath() . 'templateViewUsers.php';
+            require_once viewsPath() . 'templateGallery.php';
         } else {
             require_once viewsPath() . 'template.php';
         }

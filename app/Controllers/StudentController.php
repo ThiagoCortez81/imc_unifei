@@ -130,9 +130,47 @@ class StudentController
         \App\View::make('admin.auth', array('error' => $error, 'success' => $success));
     }
 
-    public function vote($campos)
+    public function vote($arr)
     {
-        $_SESSION['servidor'] = true;
-        \App\View::make('galeria.viewAll', array('visualizar' => true, 'votou' => true));
+        if ($arr != NULL) {
+            $StudentModel = new \App\Models\Student();
+            $servidor = $StudentModel::fazerLoginServidor($arr);
+
+            if (is_array($servidor)) {
+                if (!empty($servidor['srvId']) || !empty($_SESSION)) {
+                    $_SESSION['servidor']['id'] = $servidor['srvId'];
+                    $_SESSION['servidor']['votacao'] = $servidor['srvVotacao'];
+
+                    $alunos = $StudentModel::selectAllLogos();
+                    $votou = $_SESSION['servidor']['votacao'] ? true : false;
+
+                    \App\View::make('galeria.viewAll', array('visualizar' => true, 'votou' => $votou, 'alunos' => arrayToUtf8($alunos)));
+                } else {
+                    echo 'Ocorreu um erro! Pressione voltar.';
+                }
+            } else if ($servidor == NULL) {
+                echo 'Siape e/ou senha errado! Pressione voltar.';
+            }
+        } else if ($_SESSION['servidor']) {
+            $StudentModel = new \App\Models\Student();
+            $alunos = $StudentModel::selectAllLogos();
+            \App\View::make('galeria.viewAll', array('visualizar' => true, 'votou' => $_SESSION['servidor']['votacao'], 'alunos' => arrayToUtf8($alunos)));
+        } else {
+            \App\View::make('galeria.viewAll', array('visualizar' => true, 'votou' => null));
+        }
+
+    }
+
+    public function doVote($id)
+    {
+        $StudentModel = new \App\Models\Student();
+        if ($_SESSION['servidor']['id']) {
+            if ($StudentModel::votar($id)) {
+                $_SESSION['servidor']['id'] = '';
+                $_SESSION['servidor']['votacao'] = '';
+                $_SESSION['servidor'] = '';
+                \App\View::make('galeria.viewAll', array('visualizar' => true, 'votou' => NULL, 'alunos' => NULL, 'msg' => "Voto registrado, obrigado!"));
+            }
+        }
     }
 }

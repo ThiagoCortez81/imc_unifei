@@ -9,50 +9,8 @@
                     <h6>Logo IMC</h6>
                 </span>
 
-                <?php
-                $flag = true;
-
-                if ($error) {
-                    $flag = false;
-                    echo "
-                    <div class='alert alert-danger' role='alert'>
-                        " . $error . "
-                    </div>";
-                }
-                if ($success) {
-                    $flag = false;
-                    echo "
-                    <div class='alert alert-success' role='alert'>
-                        " . $success . "
-                    </div>";
-                }
-
-                if ($flag) {
-                    echo '<div class=\'alert alert-warning\' role=\'alert\'>
-                              Sua <b>senha</b> de acesso é seu numero de <b>CPF</b>, sem pontuações.
-                          </div>';
-                }
-                ?>
-
-                <div class="wrap-input2 validate-input" data-validate="A matrícula é necessária">
-                    <input class="input2" type="number" value="<?php echo $cpfExistente['matricula'] ?>"
-                           name="matricula">
-                    <span class="focus-input2" data-placeholder="MATRICULA"></span>
-                </div>
-
-                <div class="wrap-input2 validate-input" data-validate="A senha é necessária">
-                    <input class="input2" type="password" value="<?php echo $cpfExistente['nome'] ?>" name="password">
-                    <span class="focus-input2" data-placeholder="SENHA"></span>
-                </div>
-
-
                 <div class="container-contact2-form-btn">
-                    <div class="wrap-contact2-form-btn">
-                        <div class="contact2-form-bgbtn"></div>
-                        <button class="contact2-form-btn">
-                            LOGIN
-                        </button>
-                    </div>
+                    <h3 style="text-align: center;">Obrigado, envios finalizados!</h3>
                 </div>
             </form>
         </div>

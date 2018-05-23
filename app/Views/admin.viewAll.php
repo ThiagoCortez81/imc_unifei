@@ -19,6 +19,7 @@ if (!empty($_SESSION['admin'])) {
                         <td>Email</td>
                         <td>Curso</td>
                         <td>Status</td>
+                        <td>Votos obtidos</td>
                     </tr>
                     </thead>
                 </table>
@@ -59,9 +60,12 @@ if (!empty($_SESSION['admin'])) {
                     {"data": "aluNome"},
                     {"data": "aluEmail"},
                     {"data": "csDescricao"},
-                    {"data": "aluSubmeteu"}
-                ]
+                    {"data": "aluSubmeteu"},
+                    {"data": "filVotacao"}
+                ],
+                "order": [[5, "desc"]]
             });
+            $("#tabela_filter").prepend("<button class='btn btn-sm btn-success' onclick='window.location.reload()'>Atualizar Lista</button>&nbsp;&nbsp;&nbsp;");
         });
     </script>
     <?php

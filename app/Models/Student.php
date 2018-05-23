@@ -171,7 +171,7 @@ class Student
     {
         $DB = new DB;
 
-        $sql = "SELECT aluMatricula, aluNome, aluEmail, csDescricao, IF(aluSubmeteu, 'Logotipo enviado!', 'Matriculado') AS aluSubmeteu FROM alunos_curso ac JOIN cursos c ON ac.aluCurso = csId";
+        $sql = "SELECT aluMatricula, aluNome, aluEmail, csDescricao, IF(aluSubmeteu, 'Logotipo enviado!', 'Matriculado') AS aluSubmeteu, filVotacao FROM alunos_curso ac JOIN cursos c ON ac.aluCurso = csId JOIN files f ON ac.aluId = f.aluId";
         $stmt = $DB->prepare($sql);
         $stmt->execute();
 
@@ -179,6 +179,65 @@ class Student
         if ($stmt->errorCode() === "00000") {
             $alunos = $stmt->fetchAll(\PDO::FETCH_ASSOC);
             return $alunos;
+        } else {
+            return false;
+        }
+    }
+
+    public static function selectAllLogos()
+    {
+        $DB = new DB;
+
+        $sql = "SELECT filDescricao, filCaminho, filId FROM alunos_curso ac JOIN files f ON f.aluId = ac.aluId ORDER BY filId";
+        $stmt = $DB->prepare($sql);
+        $stmt->execute();
+
+        if ($stmt->errorCode() === "00000") {
+            $alunos = $stmt->fetchAll(\PDO::FETCH_ASSOC);
+            return $alunos;
+        } else {
+            return false;
+        }
+    }
+
+    public static function fazerLoginServidor($array)
+    {
+        $DB = new DB;
+
+        $sql = "SELECT srvId, srvVotacao FROM servidores_votos WHERE srvCiap = :usuario && srvSenha = MD5(:password)";
+        $stmt = $DB->prepare($sql);
+        $stmt->bindParam(':usuario', $array['usuario'], \PDO::PARAM_STR);
+        $stmt->bindParam(':password', $array['password'], \PDO::PARAM_INT);
+        $stmt->execute();
+
+        if ($stmt->errorCode() === "00000") {
+            $admin = $stmt->fetchAll(\PDO::FETCH_ASSOC);;
+            return $admin[0];
+        } else {
+            return false;
+        }
+    }
+
+    public static function votar($id)
+    {
+        $DB = new DB;
+
+        $sql = "UPDATE files SET filVotacao = filVotacao+1 WHERE filId = :id";
+        $stmt = $DB->prepare($sql);
+        $stmt->bindParam(':id', $id, \PDO::PARAM_INT);
+        $stmt->execute();
+
+        if ($stmt->errorCode() === "00000") {
+            $sql = "UPDATE servidores_votos SET srvVotacao = NOW() WHERE srvId = :id";
+            $stmt = $DB->prepare($sql);
+            $stmt->bindParam(':id', $_SESSION['servidor']['id'], \PDO::PARAM_INT);
+            $stmt->execute();
+
+            if ($stmt->errorCode() === "00000") {
+                return true;
+            } else {
+                return false;
+            }
         } else {
             return false;
         }

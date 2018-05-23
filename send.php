@@ -16,7 +16,8 @@ require_once __DIR__ . '/app/Controllers/StudentController.php';
 
 if ($_POST) {
     $StudentsController = new \App\Controllers\StudentController();
-    $StudentsController->doAuth($_POST);
+//    $StudentsController->doAuth($_POST);
+    $StudentsController->auth();
 } else {
     $StudentsController = new \App\Controllers\StudentController();
     $StudentsController->auth();
