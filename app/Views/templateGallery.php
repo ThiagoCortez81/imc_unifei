@@ -24,12 +24,13 @@
             box-shadow: none;
         }
     </style>
+    <script src="<?php echo frontendPath(); ?>vendor/jquery/jquery-3.2.1.min.js"></script>
 </head>
-<body style="background-image: url('<?php echo frontendPath(); ?>images/bg-01.jpg');">
+<body style="margin-top: -22px;background-image: url('<?php echo frontendPath(); ?>images/bg-01.jpg');">
 <div style="background: rgba(16, 58, 132, 0.8);  <?php if (empty($_SESSION['servidor'])) {
-    echo "height: 100%;";
+    echo "height: fit-content;";
 } ?>">
-    <div class="container gallery-container wrap-contact2">
+    <div class="container gallery-container wrap-contact2" style="margin-top: 20px;">
         <?php
         if (isset($viewName)) {
             $path = viewsPath() . $viewName . '.php';
@@ -40,7 +41,6 @@
         ?>
     </div>
 </div>
-<script src="<?php echo frontendPath(); ?>vendor/jquery/jquery-3.2.1.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/baguettebox.js/1.8.1/baguetteBox.min.js"></script>
 <script>
     baguetteBox.run('.tz-gallery');

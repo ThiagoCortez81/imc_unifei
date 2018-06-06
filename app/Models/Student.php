@@ -171,13 +171,16 @@ class Student
     {
         $DB = new DB;
 
-        $sql = "SELECT aluMatricula, aluNome, aluEmail, csDescricao, IF(aluSubmeteu, 'Logotipo enviado!', 'Matriculado') AS aluSubmeteu, filVotacao FROM alunos_curso ac JOIN cursos c ON ac.aluCurso = csId JOIN files f ON ac.aluId = f.aluId";
+        $sql = "SELECT aluMatricula, aluNome, aluEmail, csDescricao, filCaminho, filVotacao FROM alunos_curso ac JOIN cursos c ON ac.aluCurso = csId JOIN files f ON ac.aluId = f.aluId";
         $stmt = $DB->prepare($sql);
         $stmt->execute();
 
 //        var_dump($stmt->errorCode());
         if ($stmt->errorCode() === "00000") {
             $alunos = $stmt->fetchAll(\PDO::FETCH_ASSOC);
+            foreach ($alunos as $key => &$aluno) {
+                $aluno['filCaminho'] = '<img width="150px" height="150px" src="http://' . $_SERVER[HTTP_HOST] . '/' . strstr($aluno['filCaminho'], 'app') . '" style="padding: 10px; height: 170px; ">';
+            }
             return $alunos;
         } else {
             return false;
@@ -188,10 +191,28 @@ class Student
     {
         $DB = new DB;
 
-        $sql = "SELECT filDescricao, filCaminho, filId FROM alunos_curso ac JOIN files f ON f.aluId = ac.aluId ORDER BY filId";
+        $sql = "SELECT filCaminho, filId, filVotacao FROM alunos_curso ac JOIN files f ON f.aluId = ac.aluId ORDER BY filVotacao DESC";
         $stmt = $DB->prepare($sql);
         $stmt->execute();
 
+        if ($stmt->errorCode() === "00000") {
+            $alunos = $stmt->fetchAll(\PDO::FETCH_ASSOC);
+            return $alunos;
+        } else {
+            return false;
+        }
+    }
+
+
+    public static function selectAlunos()
+    {
+        $DB = new DB;
+
+        $sql = "SELECT aluNome FROM alunos_curso ORDER BY aluNome";
+        $stmt = $DB->prepare($sql);
+        $stmt->execute();
+
+//        var_dump($stmt->errorCode());
         if ($stmt->errorCode() === "00000") {
             $alunos = $stmt->fetchAll(\PDO::FETCH_ASSOC);
             return $alunos;

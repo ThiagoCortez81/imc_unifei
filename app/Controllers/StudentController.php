@@ -132,32 +132,33 @@ class StudentController
 
     public function vote($arr)
     {
-        if ($arr != NULL) {
-            $StudentModel = new \App\Models\Student();
-            $servidor = $StudentModel::fazerLoginServidor($arr);
+//        if ($arr != NULL) {
+        $StudentModel = new \App\Models\Student();
+//            $servidor = $StudentModel::fazerLoginServidor($arr);
+//
+//            if (is_array($servidor)) {
+//                if (!empty($servidor['srvId']) || !empty($_SESSION)) {
+//                    $_SESSION['servidor']['id'] = $servidor['srvId'];
+//                    $_SESSION['servidor']['votacao'] = $servidor['srvVotacao'];
 
-            if (is_array($servidor)) {
-                if (!empty($servidor['srvId']) || !empty($_SESSION)) {
-                    $_SESSION['servidor']['id'] = $servidor['srvId'];
-                    $_SESSION['servidor']['votacao'] = $servidor['srvVotacao'];
+        $alunos = $StudentModel::selectAllLogos();
+        $nomes = $StudentModel::selectAlunos();
+//                    $votou = $_SESSION['servidor']['votacao'] ? true : false;
 
-                    $alunos = $StudentModel::selectAllLogos();
-                    $votou = $_SESSION['servidor']['votacao'] ? true : false;
-
-                    \App\View::make('galeria.viewAll', array('visualizar' => true, 'votou' => $votou, 'alunos' => arrayToUtf8($alunos)));
-                } else {
-                    echo 'Ocorreu um erro! Pressione voltar.';
-                }
-            } else if ($servidor == NULL) {
-                echo 'Siape e/ou senha errado! Pressione voltar.';
-            }
-        } else if ($_SESSION['servidor']) {
-            $StudentModel = new \App\Models\Student();
-            $alunos = $StudentModel::selectAllLogos();
-            \App\View::make('galeria.viewAll', array('visualizar' => true, 'votou' => $_SESSION['servidor']['votacao'], 'alunos' => arrayToUtf8($alunos)));
-        } else {
-            \App\View::make('galeria.viewAll', array('visualizar' => true, 'votou' => null));
-        }
+        \App\View::make('galeria.viewAll', array('visualizar' => true, 'votou' => $votou, 'alunos' => arrayToUtf8($alunos)));
+//                } else {
+//                    echo 'Ocorreu um erro! Pressione voltar.';
+//                }
+//            } else if ($servidor == NULL) {
+//                echo 'Siape e/ou senha errado! Pressione voltar.';
+//            }
+//        } else if ($_SESSION['servidor']) {
+//            $StudentModel = new \App\Models\Student();
+//            $alunos = $StudentModel::selectAllLogos();
+//            \App\View::make('galeria.viewAll', array('visualizar' => true, 'votou' => $_SESSION['servidor']['votacao'], 'alunos' => arrayToUtf8($alunos)));
+//        } else {
+//            \App\View::make('galeria.viewAll', array('visualizar' => true, 'votou' => null));
+//        }
 
     }
 

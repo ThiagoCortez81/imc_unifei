@@ -6,10 +6,9 @@ require_once __DIR__ . '/app/Models/Student.php';
 require_once __DIR__ . '/app/View.php';
 require_once __DIR__ . '/app/helpers.php';
 require_once __DIR__ . '/app/Controllers/StudentController.php';
-error_reporting(E_ALL);
+//error_reporting(E_ALL);
 
 if ($_POST || $_SESSION) {
-    echo 'asij';
     if ($_POST)
         $arr = $_POST;
 

@@ -35,7 +35,7 @@ function arrayToUtf8($array)
     return $array;
 }
 
-function listLogos($array, $votou)
+function listLogos($array)
 {
     $html = "";
 
@@ -47,20 +47,17 @@ function listLogos($array, $votou)
                              <img src="http://' . $_SERVER[HTTP_HOST] . '/' . strstr($logo['filCaminho'], 'app') . '" alt="' . $logo['filDescricao'] . '" style="padding: 10px; height: 170px; ">
                          </a>
                          <div class="caption">
-                             <div id="con_text_' . $logo['filId'] . '" style="height: 150px">
+                             <!--<div id="con_text_' . $logo['filId'] . '" style="height: 150px">
                                  <h5 name="hidden_' . $logo['filId'] . '" style="margin-top: -20px"><br>' . ((strlen($logo['filDescricao']) > 250) ? (substr($logo['filDescricao'], 0, 247)) . "... <br><a style='cursor:pointer;' onclick='$(\"[name=\\\"hidden_" . $logo['filId'] . "\\\"]\").toggle(); $(\"#con_text_" . $logo['filId'] . "\").css(\"height\", \"auto\")'>Ver mais</a>" : $logo['filDescricao']) . '</h5>
                                  <h5 name="hidden_' . $logo['filId'] . '" style="display: none; margin-top: -20px"><br>' . $logo['filDescricao'] . '<br><a  style="cursor:pointer;" onclick="$(\'[name=\\\'hidden_' . $logo['filId'] . '\\\']\').toggle(); $(\'#con_text_' . $logo['filId'] . '\').css(\'height\', \'150px\')">Mostrar Menos</a></h5>
-                             </div>';
-        if (!$votou || empty($votou)) {
-            $html .= '<hr>
-                      <div style="text-align: center;">
-                        <button class="btn btn-success" onclick="if (confirm(\'Deseja votar nesse logo? Não será possível votar novamente.\')) { window.location.href = \'votar?id=' . $logo['filId'] . '\'; } else { return false; }"><i class="fa fa-check"></i> Votar nesse logo</button>
-                      </div>';
-        }
-        $html .= "       </div>
+                             </div>-->
+                             <hr>
+                             <div style="text-align: center;">
+                               <h4>Votos Obtidos: ' . $logo['filVotacao'] . '</h4>
+                             </div>
+                         </div>
                       </div>
-                   </div>
-            ";
+                   </div>';
     }
 
     return $html;

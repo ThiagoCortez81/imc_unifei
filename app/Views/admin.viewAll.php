@@ -18,7 +18,7 @@ if (!empty($_SESSION['admin'])) {
                         <td>Nome</td>
                         <td>Email</td>
                         <td>Curso</td>
-                        <td>Status</td>
+                        <td>Logotipo</td>
                         <td>Votos obtidos</td>
                     </tr>
                     </thead>
@@ -60,7 +60,7 @@ if (!empty($_SESSION['admin'])) {
                     {"data": "aluNome"},
                     {"data": "aluEmail"},
                     {"data": "csDescricao"},
-                    {"data": "aluSubmeteu"},
+                    {"data": "filCaminho"},
                     {"data": "filVotacao"}
                 ],
                 "order": [[5, "desc"]]
